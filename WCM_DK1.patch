@@ -1,0 +1,167 @@
+diff -rpNc -x.DS_Store -x.cproject -x.project 3rd_party_orig/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/app.h 3rd_party/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/app.h
+*** 3rd_party_orig/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/app.h	2014-10-22 01:09:02.000000000 +0200
+--- 3rd_party/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/app.h	2015-12-18 15:57:34.000000000 +0100
+*************** SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, 
+*** 60,65 ****
+--- 60,66 ----
+  #include "driver/nvm/drv_nvm.h"
+  #include "driver/tmr/drv_tmr.h"
+  
++ #include <config_cyassl.h>
+  #include <cyassl/ssl.h>
+  #include <cyassl/internal.h>
+  #include "wcm_queue.h"
+diff -rpNc -x.DS_Store -x.cproject -x.project 3rd_party_orig/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/custom_http_app.c 3rd_party/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/custom_http_app.c
+*** 3rd_party_orig/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/custom_http_app.c	2014-10-23 23:04:10.000000000 +0200
+--- 3rd_party/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/custom_http_app.c	2015-12-18 15:57:34.000000000 +0100
+*************** static HTTP_IO_RESULT HTTPPostWifiConfig
+*** 644,650 ****
+                  memcpy(security_type, (void*)(httpDataBuff+6), strlen((char*)(httpDataBuff+6)));
+                  security_type[strlen((char*)(httpDataBuff+6))] = 0; /* Terminate string */
+  
+!                 if (!strcmp((char*)security_type, (const char*)"no"))
+                  {
+                      EZ_CFGCXT.security = DRV_WIFI_SECURITY_OPEN;
+                  }
+--- 644,650 ----
+                  memcpy(security_type, (void*)(httpDataBuff+6), strlen((char*)(httpDataBuff+6)));
+                  security_type[strlen((char*)(httpDataBuff+6))] = 0; /* Terminate string */
+  
+!                 if (!strcmp((char*)security_type, (const char*)"none"))
+                  {
+                      EZ_CFGCXT.security = DRV_WIFI_SECURITY_OPEN;
+                  }
+diff -rpNc -x.DS_Store -x.cproject -x.project 3rd_party_orig/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/system_config/wcm_dev_kit_1/tcpip_profile/tcpip_config.h 3rd_party/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/system_config/wcm_dev_kit_1/tcpip_profile/tcpip_config.h
+*** 3rd_party_orig/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/system_config/wcm_dev_kit_1/tcpip_profile/tcpip_config.h	2014-10-23 01:46:45.000000000 +0200
+--- 3rd_party/WCM_DK1_01.00.00/apps/tcpip/wcm_dev_kit_1/firmware/src/system_config/wcm_dev_kit_1/tcpip_profile/tcpip_config.h	2015-12-18 15:59:03.000000000 +0100
+*************** SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, 
+*** 45,51 ****
+  
+  #define TCPIP_STACK_USE_IPV4                // enable IPv4 functionality
+  //#define TCPIP_STACK_USE_ICMP_SERVER         // Ping query and response capability
+! #define TCPIP_STACK_USE_HTTP_SERVER        // New HTTP server with POST, Cookies, Authentication, etc.
+  //#define TCPIP_STACK_USE_SSL_SERVER          // SSL server socket support 
+  //#define TCPIP_STACK_USE_SSL_CLIENT          // SSL client socket support 
+  #define TCPIP_STACK_USE_DHCP_CLIENT         // Dynamic Host Configuration Protocol client for obtaining IP address and other parameters
+--- 45,51 ----
+  
+  #define TCPIP_STACK_USE_IPV4                // enable IPv4 functionality
+  //#define TCPIP_STACK_USE_ICMP_SERVER         // Ping query and response capability
+! //#define TCPIP_STACK_USE_HTTP_SERVER        // New HTTP server with POST, Cookies, Authentication, etc.
+  //#define TCPIP_STACK_USE_SSL_SERVER          // SSL server socket support 
+  //#define TCPIP_STACK_USE_SSL_CLIENT          // SSL client socket support 
+  #define TCPIP_STACK_USE_DHCP_CLIENT         // Dynamic Host Configuration Protocol client for obtaining IP address and other parameters
+*************** SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, 
+*** 56,62 ****
+  //#define TCPIP_STACK_USE_DNS_SERVER          // Domain Name Service Server for redirection to the local device
+  //#define TCPIP_STACK_USE_NBNS                // NetBIOS Name Service Server for repsonding to NBNS hostname broadcast queries
+  //#define TCPIP_STACK_USE_REBOOT_SERVER     // Module for resetting this PIC remotely.  Primarily useful for a Bootloader.
+! #define TCPIP_STACK_USE_SNTP_CLIENT         // Simple Network Time Protocol for obtaining current date/time from Internet
+  //#define TCPIP_STACK_USE_DYNAMICDNS_CLIENT   // Dynamic DNS client updater module
+  //#define TCPIP_STACK_USE_BERKELEY_API        // Berkeley Sockets APIs are available
+  //#define TCPIP_STACK_USE_IPV6                // enable IPv6 functionality
+--- 56,62 ----
+  //#define TCPIP_STACK_USE_DNS_SERVER          // Domain Name Service Server for redirection to the local device
+  //#define TCPIP_STACK_USE_NBNS                // NetBIOS Name Service Server for repsonding to NBNS hostname broadcast queries
+  //#define TCPIP_STACK_USE_REBOOT_SERVER     // Module for resetting this PIC remotely.  Primarily useful for a Bootloader.
+! //#define TCPIP_STACK_USE_SNTP_CLIENT         // Simple Network Time Protocol for obtaining current date/time from Internet
+  //#define TCPIP_STACK_USE_DYNAMICDNS_CLIENT   // Dynamic DNS client updater module
+  //#define TCPIP_STACK_USE_BERKELEY_API        // Berkeley Sockets APIs are available
+  //#define TCPIP_STACK_USE_IPV6                // enable IPv6 functionality
+diff -rpNc -x.DS_Store -x.cproject -x.project 3rd_party_orig/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/drv_wifi.h 3rd_party/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/drv_wifi.h
+*** 3rd_party_orig/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/drv_wifi.h	2014-09-09 01:10:34.000000000 +0200
+--- 3rd_party/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/drv_wifi.h	2015-12-18 15:57:34.000000000 +0100
+*************** typedef enum
+*** 333,341 ****
+      These defines identify the default Wi-Fi scan context values that
+      can be used in the DRV_WIFI_SCAN_CONTEXT structure.                   
+  */
+  #define DRV_WIFI_DEFAULT_SCAN_COUNT                   (1)
+! #define DRV_WIFI_DEFAULT_SCAN_MIN_CHANNEL_TIME        (200)   // ms
+! #define DRV_WIFI_DEFAULT_SCAN_MAX_CHANNEL_TIME        (400)   // ms
+  #define DRV_WIFI_DEFAULT_SCAN_PROBE_DELAY             (20)    // us
+  
+  
+--- 333,343 ----
+      These defines identify the default Wi-Fi scan context values that
+      can be used in the DRV_WIFI_SCAN_CONTEXT structure.                   
+  */
++ /* Exosite specific, lower the scan timeout, otherwise the connect and the scan
++  * can interfere resulting in not being able to connect in Security mode: open*/
+  #define DRV_WIFI_DEFAULT_SCAN_COUNT                   (1)
+! #define DRV_WIFI_DEFAULT_SCAN_MIN_CHANNEL_TIME        (10)   // ms
+! #define DRV_WIFI_DEFAULT_SCAN_MAX_CHANNEL_TIME        (10)   // ms
+  #define DRV_WIFI_DEFAULT_SCAN_PROBE_DELAY             (20)    // us
+  
+  
+diff -rpNc -x.DS_Store -x.cproject -x.project 3rd_party_orig/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_com.c 3rd_party/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_com.c
+*** 3rd_party_orig/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_com.c	2014-09-09 01:10:34.000000000 +0200
+--- 3rd_party/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_com.c	2015-12-18 15:57:34.000000000 +0100
+*************** static bool isDhcpInProgress(void)
+*** 199,204 ****
+--- 199,209 ----
+      return g_dhcpInProgress;
+  }
+  
++ bool isDhcpDone(void)
++ {
++     return g_DhcpSuccessful;
++ }
++ 
+  void SignalDHCPSuccessful(void)
+  {
+      g_DhcpSuccessful = true;
+diff -rpNc -x.DS_Store -x.cproject -x.project 3rd_party_orig/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_event_handler.c 3rd_party/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_event_handler.c
+*** 3rd_party_orig/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_event_handler.c	2014-09-09 01:10:34.000000000 +0200
+--- 3rd_party/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_event_handler.c	2015-12-18 15:57:34.000000000 +0100
+*************** void WiFiAsyncTask(void)
+*** 365,371 ****
+      if (isAsyncEasyConfigPending())
+      {
+          WifiAsyncClearEventPending(ASYNC_EASY_CONFIG_PENDING);
+!         WiFi_EasyConfigTask();
+      }
+  
+      if (isAsyncDhcpPending())
+--- 365,374 ----
+      if (isAsyncEasyConfigPending())
+      {
+          WifiAsyncClearEventPending(ASYNC_EASY_CONFIG_PENDING);
+!         //Exosite specific: do not call easyconfigTask, easy config is not used
+!         //to avoid NVM config conflict between Exosite config, and EasyConfig
+!         //only the HTTP server part
+!         //WiFi_EasyConfigTask();
+      }
+  
+      if (isAsyncDhcpPending())
+diff -rpNc -x.DS_Store -x.cproject -x.project 3rd_party_orig/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_init.c 3rd_party/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_init.c
+*** 3rd_party_orig/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_init.c	2014-10-23 23:04:10.000000000 +0200
+--- 3rd_party/WCM_DK1_01.00.00/framework/driver/wifi/mrf24w/src/drv_wifi_init.c	2015-12-18 15:57:34.000000000 +0100
+*************** bool DRV_WIFI_ConfigDataLoad(void)
+*** 820,825 ****
+--- 820,829 ----
+          BSP_LED_LightShowSet(BSP_LED_CONNECTING_TO_AP); // DGC_MODIFIED
+      }
+  
++     SYS_CONSOLE_PRINT("Read config status: %d\n", bVerifySuccess);
++     //Exosite specific: always use default, we use the NVM config for our own purposes
++     //This should not happen, because the EasyConfig task will be disabled
++     bVerifySuccess = false;
+      if (bVerifySuccess == false)  // use default value
+      {
+          // Load the default SSID Name
+diff -rpNc -x.DS_Store -x.cproject -x.project 3rd_party_orig/WCM_DK1_01.00.00/framework/tcpip/src/http.c 3rd_party/WCM_DK1_01.00.00/framework/tcpip/src/http.c
+*** 3rd_party_orig/WCM_DK1_01.00.00/framework/tcpip/src/http.c	2014-09-09 01:10:34.000000000 +0200
+--- 3rd_party/WCM_DK1_01.00.00/framework/tcpip/src/http.c	2015-12-18 15:57:34.000000000 +0100
+*************** static void TCPIP_HTTP_Process(HTTP_CONN
+*** 990,995 ****
+--- 990,998 ----
+                  // If this is a redirect, print the rest of the Location: header
+                  if(pHttpCon->httpStatus == HTTP_REDIRECT)
+                  {
++                     //Exosite specific: in case of redirect, do not show any message, that's all, we're done
++                     pHttpCon->sm = SM_HTTP_DISCONNECT;
++                     break;
+                      TCPIP_TCP_StringPut(pHttpCon->socket, pHttpCon->data);
+                      TCPIP_TCP_StringPut(pHttpCon->socket, (const uint8_t*)"\r\n\r\n304 Redirect: ");
+                      TCPIP_TCP_StringPut(pHttpCon->socket, pHttpCon->data);

@@ -1,0 +1,44 @@
+~inc:header.inc~
+		<script>
+function doTheThing(){
+	var ssid = document.getElementById('ssid').value;
+	var sectype = document.getElementById('sectype').value;
+	var key = document.getElementById('key').value;
+
+
+	var http = new XMLHttpRequest();
+	var params = "wlan=infra"
+	           + "&ssid=" + ssid
+	           + "&sec=" + sectype
+	           + "&key=" + key;
+	http.open("POST", "/", true);
+
+	//Send the proper header information along with the request
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.setRequestHeader("Content-length", params.length);
+	http.setRequestHeader("Connection", "close");
+
+	http.onreadystatechange = function() {
+		if(http.readyState == 4 && http.status == 200) {
+			alert(http.responseText);
+		}
+	}
+	http.send(params);
+
+	return false;
+}
+		</script>
+		<form onsubmit="return doTheThing()">
+			<label for="ssid">SSID</label>
+			<input type="text" id="ssid" rel="ssid" preview="" tabindex=1 />
+			<label for="sectype">Security Type</label>
+			<select type="text" id="sectype" rel="sectype" tabindex=2>
+				<option value="none">None</option>
+				<option value="wep">WEP</option>
+				<option value="wpa">WPA/WPA2</option>
+			</select>
+			<label for="key">Key</label>
+			<input type="text" id="key" rel="key" preview="" tabindex=3 />
+			<input type="submit" value="Configure WiFi">
+		</form>
+~inc:footer.inc~
